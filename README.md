@@ -1,7 +1,7 @@
 # Date Structures & Algorithms
 
 ## Bubble Sort
-Time complexity: O(n^2)\
+Time complexity: O(n^{2}$)\
 Space complexity: O(1)
 
 Loop through entire input list, and sort each element with it's previous element. Keep looping until you get through the list without swapping

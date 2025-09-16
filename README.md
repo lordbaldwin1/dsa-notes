@@ -71,12 +71,10 @@ Basically, loop through the entire array, then loop backwards with j and put the
 
 ```python
 def insertion_sort(nums):
-    for i in range(1, len(nums)):
+    for i in range(len(nums)):
         j = i
         while j > 0 and nums[j-1] > nums[j]:
-            temp = nums[j]
-            nums[j] = nums[j-1]
-            nums[j-1] = temp
+            nums[j], nums[j-1] = nums[j-1], nums[j]
             j -= 1
     return nums
 ```

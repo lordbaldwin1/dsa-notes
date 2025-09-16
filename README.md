@@ -96,6 +96,8 @@ def insertion_sort(nums):
 Time complexity: O(nlogn)\
 Space complexity: O(1)
 
+Start with pivot at n-1, go through list 
+
 ```python
 def quick_sort(nums, low, high):
     if low < high:

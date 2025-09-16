@@ -58,3 +58,21 @@ def merge(first, second):
         j += 1
     return final
 ```
+
+## Insertion Sort
+Time complexity: O(n<sub>2</sub>)\
+Space complexity: O(1)
+
+Insertion sort is great for small lists or lists that are already almost sorted.
+
+```python
+def insertion_sort(nums):
+    for i in range(1, len(nums)):
+        j = i
+        while j > 0 and nums[j-1] > nums[j]:
+            temp = nums[j]
+            nums[j] = nums[j-1]
+            nums[j-1] = temp
+            j -= 1
+    return nums
+```

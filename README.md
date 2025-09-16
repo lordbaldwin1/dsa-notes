@@ -22,4 +22,39 @@ def bubble_sort(nums):
   return nums
 ```
 
-## 
+## Merge Sort
+Time complexity: O(n * log(n))\
+Space complexity: O(n)
+
+Recursively split array in half until it is a single element. Then call merge function on those split arrays. Merge will build a new sorted array from those arrays as it moves back up the call stack.
+
+```python
+def merge_sort(nums):
+    if len(nums) < 2:
+        return nums
+
+    halfway = len(nums) // 2
+    sorted_left = merge_sort(nums[halfway:])
+    sorted_right = merge_sort(nums[:halfway])
+    return merge(sorted_left, sorted_right)
+
+
+def merge(first, second):
+    final = []
+    i, j = 0, 0
+
+    while i < len(first) and j < len(second):
+        if first[i] < second[j]:
+            final.append(first[i])
+            i += 1
+        else:
+            final.append(second[j])
+            j += 1
+    while i < len(first):
+        final.append(first[i])
+        i += 1
+    while j < len(second):
+        final.append(second[j])
+        j += 1
+    return final
+```

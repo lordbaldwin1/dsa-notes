@@ -65,6 +65,10 @@ Space complexity: O(1)
 
 Insertion sort is great for small lists or lists that are already almost sorted.
 
+Loop through the entire list with i starting at i = 1. With j, loop backward through the list and swap while j > 0 and while the number at j-1 is greater than j.
+
+Basically, loop through the entire array, then loop backwards with j and put the number at i into the correct location.
+
 ```python
 def insertion_sort(nums):
     for i in range(1, len(nums)):

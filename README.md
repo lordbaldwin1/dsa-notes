@@ -1,6 +1,6 @@
 # Date Structures & Algorithms
 
-## Bubble Sort
+## Bubble Sort (iterative)
 Time complexity: O(n<sup>2</sup>)\
 Space complexity: O(1)
 
@@ -22,9 +22,16 @@ def bubble_sort(nums):
   return nums
 ```
 
-## Merge Sort
+## Merge Sort (recursive)
 Time complexity: O(n * log(n))\
 Space complexity: O(n)
+
+### Pros
+- Fast
+- Stable: duplicate keys will be in same order in the sorted list
+### Cons
+- Memory usage
+- Recursive
 
 Recursively split array in half until it is a single element. Then call merge function on those split arrays. Merge will build a new sorted array from those arrays as it moves back up the call stack.
 
@@ -59,9 +66,15 @@ def merge(first, second):
     return final
 ```
 
-## Insertion Sort
+## Insertion Sort (iterative)
 Time complexity: O(n<sub>2</sub>)\
 Space complexity: O(1)
+
+### Pros
+- Fast for small data sets/partially sorted data
+- Constant memory
+- Stable: doesn't change relative order of equal key elements
+- Can sort a list as it receives it
 
 Insertion sort is great for small lists or lists that are already almost sorted.
 
@@ -77,4 +90,28 @@ def insertion_sort(nums):
             nums[j], nums[j-1] = nums[j-1], nums[j]
             j -= 1
     return nums
+```
+
+## Quick Sort (recursive)
+Time complexity: O(nlogn)\
+Space complexity: O(1)
+
+```python
+def quick_sort(nums, low, high):
+    if low < high:
+        middle = partition(nums, low, high)
+        quick_sort(nums, low, middle-1)
+        quick_sort(nums, middle+1, high)
+
+
+def partition(nums, low, high):
+    pivot = nums[high]
+    i = low - 1
+
+    for j in range(low, high):
+        if nums[j] < pivot:
+            i += 1
+            nums[i], nums[j] = nums[j], nums[i]
+    nums[i+1], nums[high] = nums[high], nums[i+1]
+    return i+1
 ```

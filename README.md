@@ -1,6 +1,6 @@
-# data structures & algorithms notes
+# Date Structures & Algorithms
 
-## bubble sort
+## Bubble Sort
 Time complexity: O(n^2)
 Space complexity: O(1)
 
@@ -22,3 +22,5 @@ def bubble_sort(nums):
   
   return nums
 ```
+
+## 

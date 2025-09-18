@@ -101,9 +101,9 @@ Start with pivot at n-1, go through list
 ```python
 def quick_sort(nums, low, high):
     if low < high:
-        middle = partition(nums, low, high)
-        quick_sort(nums, low, middle-1)
-        quick_sort(nums, middle+1, high)
+        p = partition(nums, low, high)
+        quick_sort(nums, low, p - 1)
+        quick_sort(nums, p + 1, high)
 
 
 def partition(nums, low, high):
@@ -114,6 +114,104 @@ def partition(nums, low, high):
         if nums[j] < pivot:
             i += 1
             nums[i], nums[j] = nums[j], nums[i]
-    nums[i+1], nums[high] = nums[high], nums[i+1]
-    return i+1
+    nums[i + 1], nums[high] = nums[high], nums[i + 1]
+    return i + 1
+```
+
+## Selection Sort (iterative)
+Time complexity: O(n<sub>2</sub>)/
+Space complexity: 0(1)
+
+Loop through the entire list, have inner loop find index of smallest number, then swap that smallest number with i. Continue through entire list.
+
+```python
+def selection_sort(nums):
+    for i in range(0, len(nums)):
+        smallestIdx = i
+        for j in range(i + 1, len(nums)):
+            if nums[j] < nums[smallestIdx]:
+                smallestIdx = j
+        nums[i], nums[smallestIdx] = nums[smallestIdx], nums[i]
+    return nums
+```
+
+## Binary Search Tree
+
+Insertion is super easy:
+- if no root, create or set val in below example
+- if value exists, return
+- traverse recursively until we find the place to insert and uhh... insert it!!!
+Deletion is a little more
+- basically, we want to recurse and "solve" the subtree of our current node
+- if there's no root, we just return None, nothing to delete
+- then we recurse to find the node to delete. So we save the "solved" subtrees, we need to save the result from recursing and return ourselves.
+- after traversing, what cases do we need to check?
+- if 1 child, just return the other up the call stack
+- this can also handle if 0 children because we'll return self.left or self.right which will be None
+- inorder successor: pointer to right subtree, iterate to left most child in that subtree
+- set our value to the successor value, call delete on that subtree, save the "solved" subtree and return self
+```python
+class BSTNode:
+    def delete(self, val):
+        if self.val is None:
+            return None
+
+        if val < self.val:
+            if self.left:
+                self.left = self.left.delete(val)
+            return self
+        if val > self.val:
+            if self.right:
+                self.right = self.right.delete(val)
+            return self
+
+        # val == self.val
+        if not self.left:
+            return self.right
+        if not self.right:
+            return self.left
+        #inorder successor
+        succ = self.right
+        while succ.left:
+            succ = succ.left
+        self.val = succ.val
+        self.right = self.right.delete(succ.val)
+        return self
+
+    def __init__(self, val=None):
+        self.left = None
+        self.right = None
+        self.val = val
+
+    def insert(self, val):
+        if not self.val:
+            self.val = val
+            return
+
+        if self.val == val:
+            return
+
+        if val < self.val:
+            if self.left:
+                self.left.insert(val)
+                return
+            self.left = BSTNode(val)
+            return
+
+        if self.right:
+            self.right.insert(val)
+            return
+        self.right = BSTNode(val)
+
+    def get_min(self):
+        current = self
+        while current.left is not None:
+            current = current.left
+        return current.val
+
+    def get_max(self):
+        current = self
+        while current.right is not None:
+            current = current.right
+        return current.val
 ```

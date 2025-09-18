@@ -141,6 +141,7 @@ Insertion is super easy:
 - if no root, create or set val in below example
 - if value exists, return
 - traverse recursively until we find the place to insert and uhh... insert it!!!
+
 Deletion is a little more
 - basically, we want to recurse and "solve" the subtree of our current node
 - if there's no root, we just return None, nothing to delete

@@ -215,4 +215,51 @@ class BSTNode:
         while current.right is not None:
             current = current.right
         return current.val
+
+    def exists(self, val):
+        if self.val == val:
+            return True
+
+        res = False
+        if val < self.val:
+            if self.left:
+                res = self.left.exists(val)
+            return res
+        else:
+            if self.right:
+                res = self.right.exists(val)
+            return res
+
+    def height(self):
+        if self.val is None:
+            return 0
+
+        left = 0
+        right = 0
+        if self.left:
+            left = self.left.height()
+        if self.right:
+            right = self.right.height()
+        return max(right, left) + 1
 ```
+
+## Red Black Trees
+BSTs have an issue. Namely that if data is inserted in sorted order, lookups will be O(n) rather than O(logn). The time complexity is entirely dependent upon the depth.
+
+Red Black Trees help keep the tree relatively balanced as it inserts and deletes nodes.
+- Each node is either red or black
+- The root is black
+- All Nil leaf nodes are black
+- If a node is red, then both its children are black
+- All paths from a single node go through the same number of black nodes to reach any of its descendant NIL (black) nodes.
+
+Rotations are O(1) operations
+
+Left Rotation
+- pivot node's initial parent becomes its left child
+- pivot node's old left child becomes its initial parent's new right child
+
+Left Rotation Process
+- Start left rotation
+- old left child replaced by parent
+- old left child becomes new left child's new right child

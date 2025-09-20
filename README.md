@@ -263,3 +263,6 @@ Left Rotation Process
 - Start left rotation
 - old left child replaced by parent
 - old left child becomes new left child's new right child
+
+## Hash Maps
+Notes in journal lol!

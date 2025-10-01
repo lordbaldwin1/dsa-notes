@@ -375,3 +375,35 @@ Recursive search:
 ```
 
 
+Find matches:
+```Python
+    def find_matches(self, document):
+        res = set()
+        for i in range(0, len(document)):
+            current_level = self.root
+            for j in range(i, len(document)):
+                if document[j] not in current_level:
+                    break
+                current_level = current_level[document[j]]
+                if self.end_symbol in current_level:
+                    res.add(document[i:j+1])
+        return res
+```
+
+Longest common prefix:
+```Python
+    def longest_common_prefix(self):
+        current = self.root
+        prefix = ""
+        while True:
+            children = list(current.keys())
+            if len(children) == 0 or len(children) > 1:
+                break
+            if children[0] == self.end_symbol:
+                break
+            if len(children) == 1:
+                prefix += children[0]
+                current = current[children[0]]
+        return prefix
+```
+

@@ -266,3 +266,112 @@ Left Rotation Process
 
 ## Hash Maps
 Notes in journal lol!
+
+
+## Tries
+
+Tries are very useful for prefix matching. For example, finding all words in a dictionary that start with a given prefix.
+
+Here are some more examples:
+- autocomplete
+- keyword search
+- spellcheck
+
+```Python
+{
+	"h": {
+		"e": {
+			"l": {
+				"l": {
+					"o": {
+						"*": True
+					}
+				},
+				"p": {
+					"*": True
+				}
+			}
+		},
+		"i": {
+			"*": True
+		}
+	}
+}
+```
+
+To add a word:
+- Create current_level pointer to root of trie
+- loop over each char in the word-to-add
+- if char is not a key in the current level, create an empty dict, {}, at current level with key of char
+- for every iteration of the loop, increment the current_level pointer by setting current_level = current_level[char]
+- at the end, set current_level[*] = true to indicate that we have finished the word
+```Python
+class Trie:
+    def add(self, word):
+        current_level = self.root
+        for c in word:
+            if c not in current_level:
+                current_level[c] = {}
+            current_level = current_level[c]
+        current_level[self.end_symbol] = True
+            
+
+    # don't touch below this line
+
+    def __init__(self):
+        self.root = {}
+        self.end_symbol = "*"
+```
+
+To check if a word exists:
+- create pointer at root of trie
+- loop over each char in word
+- check if char is not a key in current level, return False
+- increment pointer to next level
+- after looping, check if "*" is a key for current level, if yes return True, else return False
+```Python
+def exists(self, word):
+        current_level = self.root
+        for c in word:
+            if c not in current_level:
+                return False
+            current_level = current_level[c]
+        if self.end_symbol not in current_level:
+            return False
+        else:
+            return True
+```
+
+To get all words with matching prefix:
+- get to search location by current_level pointer
+- if a char is not in current_level, return [] because if prefix not in, no words in
+- call recursive search, return result
+
+Recursive search:
+- base case: if we hit an end_symbol, append word
+- then loop through keys in sorted order, skip "*" chars
+- add char to prefix (prefix = current_prefix + c)
+- recurse on that prefix
+- return words list
+```Python
+    def search_level(self, current_level, current_prefix, words):
+        if self.end_symbol in current_level:
+            words.append(current_prefix)
+        for c in sorted(current_level.keys()):
+            if c == self.end_symbol:
+                continue
+            prefix = current_prefix + c
+            self.search_level(current_level[c], prefix, words)
+        return words
+
+    def words_with_prefix(self, prefix):
+        words = []
+        current_level = self.root
+        for c in prefix:
+            if c not in current_level:
+                return []
+            current_level = current_level[c]
+        return self.search_level(current_level, prefix, words)
+```
+
+
